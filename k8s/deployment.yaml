@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-pug-tailwind-app
+  labels:
+    app: express-pug-tailwind-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express-pug-tailwind-app
+  template:
+    metadata:
+      labels:
+        app: express-pug-tailwind-app
+    spec:
+      containers:
+        - name: express-pug-tailwind-app
+          image: express-pug-tailwind-app
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 200m
+              memory: 128Mi
+      restartPolicy: Always

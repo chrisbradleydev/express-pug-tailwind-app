@@ -1,0 +1,30 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+metadata:
+  name: express-pug-tailwind-app-config
+build:
+  artifacts:
+    - image: express-pug-tailwind-app
+deploy:
+  kubectl:
+    manifests:
+      - k8s/*
+portForward:
+  - resourceType: deployment
+    resourceName: express-pug-tailwind-app
+    port: 3000
+    localPort: 3000
+profiles:
+  - name: dev
+    activation:
+      - command: dev
+    build:
+      artifacts:
+        - image: express-pug-tailwind-app
+          docker:
+            buildArgs:
+              ENV: development
+          sync:
+            manual:
+              - src: "**/*.js"
+                dest: .
